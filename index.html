@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+</head>
+<body>
+<button id="addUser" class="btn btn-primary">Add user</button>
+<form id="userForm" style="display: none;">
+    <input type="hidden" id="id" name="id" />
+    <div class="form-group">
+        <label for="firstName">First name</label>
+        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter firstname">
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter lastname">
+    </div>
+    <div class="form-group">
+        <label for="login">Login</label>
+        <input type="text" class="form-control" id="login" name="login" placeholder="Enter login">
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" id="active" name="active"> Active
+        </label>
+    </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" id="userFormReset" class="btn btn-default">Cancel</button>
+        </form>
+
+        <div id="usersList" style="margin-top: 5px;">
+
+        </div>
+
+        <script type="text/javascript" data-main="Scripts/main.js" src="Scripts/require.js"></script>
+
+<script>
+    require(['users', 'domReady'], function (users) {
+        users.init({
+            addUser: "#addUser",
+            userForm: "#userForm",
+            userFormCancel: "#userFormCancel",
+            usersTemplate: "#usersTemplate",
+            usersListPlaceholder: "#usersList",
+            userFormReset: "#userFormReset",
+            deleteUser: ".delete-user",
+            editUser: ".edit-user"
+        });
+    });
+</script>
+
+<script type="underscore/template" id="usersTemplate">
+    <table class="table table-bordered">
+        <thead>
+        <th>
+            Full name
+        </th>
+        <th>
+            Login
+        </th>
+        <th>
+            Active
+        </th>
+        <th>
+            Actions
+        </th>
+        </thead>
+        <tbody>
+        <% for(var i=0;i<users.length;i++){ %>
+        <tr>
+            <td>
+                <%= users[i].firstName %> <%= users[i].lastName %>
+            </td>
+            <td>
+                <%= users[i].login %>
+            </td>
+            <td>
+                <%= users[i].active %>
+            </td>
+            <td>
+                <button data-user-id=" <%= users[i].id %>" class="btn btn-primary edit-user">Edit</button>
+                <button data-user-id=" <%= users[i].id %>" class="btn btn-danger delete-user">Delete</button>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+</script>
+
+</body>
+</html>
